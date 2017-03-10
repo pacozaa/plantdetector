@@ -2,11 +2,15 @@ import cv2
 import numpy as np
 import os
 
+def savePlants(savename,plantimg,exgimg,exgimgblurred,original,notblurred,blurred,otsu,extension):
+    cv2.imwrite(savename+'/'+original+extension,plantimg)
+    cv2.imwrite(savename+'/'+notblurred+extension,exgimg)
+    cv2.imwrite(savename+'/'+blurred+extension,exgimgblurred)
+
+    ret2,th2 = cv2.threshold(exgimgblurred,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+    cv2.imwrite(savename+'/'+otsu+extension,th2)
+
 def convert(filepath,filename,extension,savepath):
-    # filepath = 'CRBD/Images/'
-    # filename = 'crop_row_001'
-    # extension = '.JPG'
-    # savepath = 'CRBD-converted/'
     directory = filepath+filename+extension
     plantimg = cv2.imread(directory)
 
@@ -25,13 +29,8 @@ def convert(filepath,filename,extension,savepath):
 
 
     exgimgblurred = cv2.GaussianBlur(exgimg,(5,5),0)
-    cv2.imshow('original', plantimg)
-    cv2.imshow('not blurred', exgimg)
-    cv2.imshow('blurred', exgimgblurred)
+
     if not os.path.exists(savepath+filename):
         os.makedirs(savepath+filename)
-    cv2.imwrite(savepath+filename+'/original.png',plantimg)
-    cv2.imwrite(savepath+filename+'/notblurred.png',exgimg)
-    cv2.imwrite(savepath+filename+'/blurred.png',exgimgblurred)
-    cv2.waitKey(0)
-    cv2.destroyAllWindows()
+
+    savePlants(savepath+filename,plantimg,exgimg,exgimgblurred,'original','notblurred','blurred','otsu','.png')
