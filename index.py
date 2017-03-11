@@ -1,8 +1,10 @@
-import covEXG
+import covEX
+import time
 import os
 from os import listdir
 from os.path import isfile, join
 
+start_time = time.time()
 pathname = 'Images/'
 pathsave = 'Images-converted/'
 
@@ -12,6 +14,7 @@ for i, val in enumerate(filelist):
     print('processing file number '+str(i))
     filename = os.path.splitext(val)[0]
     fileextension = os.path.splitext(val)[1]
-    covEXG.convert(pathname, filename, fileextension, pathsave)
+    covEX.convertTofile(pathname, filename, fileextension, pathsave)
 
-print('Shite! I\'m done ;) ')    
+print('Shite! I\'m done ;) ')
+print("--- %s seconds ---" % (time.time() - start_time))
