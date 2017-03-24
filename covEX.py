@@ -20,11 +20,20 @@ def savePlants(savename,plantimg,exgimg,exgimgblurred,original,notblurred,blurre
     # cv2.imwrite(savename+'/'+otsu+extension,th2)
 
 
-def convertGreen(rawimg):
+def convertGreenSerious(rawimg):
     blue = rawimg[:,:,0]
     green = rawimg[:,:,1]
     red = rawimg[:,:,2]
-    exg = 2*green-red-blue
+    exg = 1.5*green-red-blue
+    processedimg = np.where(exg > 50, exg, 0)
+
+    return processedimg
+
+def convertGreenPlant(rawimg):
+    blue = rawimg[:,:,0]
+    green = rawimg[:,:,1]
+    red = rawimg[:,:,2]
+    exg = 1.5*green-red-blue
     processedimg = np.where(exg > 50, exg, 0)
 
     return processedimg

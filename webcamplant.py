@@ -12,6 +12,7 @@ while(True):
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     plantimg = covEX.convertGreen(frame)
     # Display the resulting frame
+    plantimg = cv2.flip(plantimg,1)
     cv2.imshow('frame',plantimg)
     if cv2.waitKey(1) & 0xFF == ord('q'):
         break
