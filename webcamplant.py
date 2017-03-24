@@ -10,7 +10,7 @@ while(True):
 
     # Our operations on the frame come here
     gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-    plantimg = covEX.convertRed(frame)
+    plantimg = covEX.convertGreen(frame)
     # Display the resulting frame
     cv2.imshow('frame',plantimg)
     if cv2.waitKey(1) & 0xFF == ord('q'):

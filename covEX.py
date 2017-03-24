@@ -16,36 +16,25 @@ def savePlants(savename,plantimg,exgimg,exgimgblurred,original,notblurred,blurre
     cv2.imwrite(savename+'/'+notblurred+extension,exgimg)
     cv2.imwrite(savename+'/'+blurred+extension,exgimgblurred)
 
-    ret2,th2 = cv2.threshold(exgimgblurred,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
-    cv2.imwrite(savename+'/'+otsu+extension,th2)
+    # ret2,th2 = cv2.threshold(exgimgblurred,0,255,cv2.THRESH_BINARY+cv2.THRESH_OTSU)
+    # cv2.imwrite(savename+'/'+otsu+extension,th2)
+
 
 def convertGreen(rawimg):
-    width, height, channels = rawimg.shape
-    size = (w, h, channels) = (width, height, 1)
-    processedimg = np.zeros(size, np.uint8)
-    for wimg in range(0,width):
-        for himg in range(0,height):
-            blue = rawimg.item(wimg,himg,0)
-            green = rawimg.item(wimg,himg,1)
-            red = rawimg.item(wimg,himg,2)
-            exg = calEXG(red,green,blue)
-            if(exg > 50):
-                processedimg.itemset((wimg,himg,0),exg)
+    blue = rawimg[:,:,0]
+    green = rawimg[:,:,1]
+    red = rawimg[:,:,2]
+    exg = 2*green-red-blue
+    processedimg = np.where(exg > 50, exg, 0)
 
     return processedimg
 
 def convertRed(rawimg):
-    width, height, channels = rawimg.shape
-    size = (w, h, channels) = (width, height, 1)
-    processedimg = np.zeros(size, np.uint8)
-    for wimg in range(0,width):
-        for himg in range(0,height):
-            blue = rawimg.item(wimg,himg,0)
-            green = rawimg.item(wimg,himg,1)
-            red = rawimg.item(wimg,himg,2)
-            exg = calEXR(red,green,blue)
-            if(exg > 50):
-                processedimg.itemset((wimg,himg,0),exg)
+    blue = rawimg[:,:,0]
+    green = rawimg[:,:,1]
+    red = rawimg[:,:,2]
+    exg = 1.5*red-green-blue
+    processedimg = np.where(exg > 50, exg, 0)
 
     return processedimg
 
