@@ -26,6 +26,7 @@ def convertGreenSerious(rawimg):
     red = rawimg[:,:,2]
     exg = 1.5*green-red-blue
     processedimg = np.where(exg > 50, exg, 0)
+    processedimg = np.uint8(np.abs(processedimg))
 
     return processedimg
 
@@ -33,8 +34,9 @@ def convertGreenPlant(rawimg):
     blue = rawimg[:,:,0]
     green = rawimg[:,:,1]
     red = rawimg[:,:,2]
-    exg = 1.5*green-red-blue
+    exg = 2*green-red-blue
     processedimg = np.where(exg > 50, exg, 0)
+    processedimg = np.uint8(np.abs(processedimg))
 
     return processedimg
 
@@ -53,7 +55,7 @@ def convertTofile(filepath,filename,extension,savepath):
     directory = filepath+filename+extension
     plantimg = cv2.imread(directory)
 
-    exgimg = convertGreen(plantimg)
+    exgimg = convertGreenPlant(plantimg)
     exgimgblurred = cv2.GaussianBlur(exgimg,(5,5),0)
 
     if not os.path.exists(savepath+filename):

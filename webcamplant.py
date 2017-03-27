@@ -8,8 +8,7 @@ while(True):
     # Capture frame-by-frame
     ret, frame = cap.read()
 
-    # Our operations on the frame come here
-    gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    # Our operations on the frame come here    
     plantimg = covEX.convertGreenSerious(frame)
     # Display the resulting frame
     plantimg = cv2.flip(plantimg,1)
