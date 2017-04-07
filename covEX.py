@@ -34,9 +34,11 @@ def convertGreenPlant(rawimg):
     blue = rawimg[:,:,0]
     green = rawimg[:,:,1]
     red = rawimg[:,:,2]
-    exg = 2*green-red-blue
-    processedimg = np.where(exg > 50, exg, 0)
-    processedimg = np.uint8(np.abs(processedimg))
+    exg = 2.00*green-red-blue
+    blue = 2.00*blue-red-green
+    exgimg = np.where(exg > 50, exg, 0)
+    ignoreblue = np.where(blue < 100, exgimg, 0)
+    processedimg = np.uint8(np.abs(ignoreblue))
 
     return processedimg
 
@@ -44,8 +46,9 @@ def convertRed(rawimg):
     blue = rawimg[:,:,0]
     green = rawimg[:,:,1]
     red = rawimg[:,:,2]
-    exg = 1.5*red-green-blue
+    exg = 2.1*red-green-blue
     processedimg = np.where(exg > 50, exg, 0)
+    processedimg = np.uint8(np.abs(processedimg))
 
     return processedimg
 
